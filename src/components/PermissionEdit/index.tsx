@@ -1,8 +1,8 @@
-import type { PermissionItem } from '@app/components/PermissionOption';
-import PermissionOption from '@app/components/PermissionOption';
-import type { User } from '@app/hooks/useUser';
-import { Permission } from '@app/hooks/useUser';
 import { defineMessages, useIntl } from 'react-intl';
+import type { User } from '../../hooks/useUser';
+import { Permission } from '../../hooks/useUser';
+import type { PermissionItem } from '../PermissionOption';
+import PermissionOption from '../PermissionOption';
 
 export const messages = defineMessages({
   admin: 'Admin',
@@ -50,15 +50,6 @@ export const messages = defineMessages({
   advancedrequest: 'Advanced Requests',
   advancedrequestDescription:
     'Grant permission to modify advanced media request options.',
-  autorequest: 'Auto-Request',
-  autorequestDescription:
-    'Grant permission to automatically submit requests for non-4K media via Plex Watchlist.',
-  autorequestMovies: 'Auto-Request Movies',
-  autorequestMoviesDescription:
-    'Grant permission to automatically submit requests for non-4K movies via Plex Watchlist.',
-  autorequestSeries: 'Auto-Request Series',
-  autorequestSeriesDescription:
-    'Grant permission to automatically submit requests for non-4K series via Plex Watchlist.',
   viewrequests: 'View Requests',
   viewrequestsDescription:
     'Grant permission to view media requests submitted by other users.',
@@ -72,9 +63,6 @@ export const messages = defineMessages({
   viewrecent: 'View Recently Added',
   viewrecentDescription:
     'Grant permission to view the list of recently added media.',
-  viewwatchlists: 'View Plex Watchlists',
-  viewwatchlistsDescription:
-    "Grant permission to view other users' Plex Watchlists.",
 });
 
 interface PermissionEditProps {
@@ -129,12 +117,6 @@ export const PermissionEdit = ({
           description: intl.formatMessage(messages.viewrecentDescription),
           permission: Permission.RECENT_VIEW,
         },
-        {
-          id: 'viewwatchlists',
-          name: intl.formatMessage(messages.viewwatchlists),
-          description: intl.formatMessage(messages.viewwatchlistsDescription),
-          permission: Permission.WATCHLIST_VIEW,
-        },
       ],
     },
     {
@@ -185,43 +167,6 @@ export const PermissionEdit = ({
             messages.autoapproveSeriesDescription
           ),
           permission: Permission.AUTO_APPROVE_TV,
-          requires: [
-            {
-              permissions: [Permission.REQUEST, Permission.REQUEST_TV],
-              type: 'or',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'autorequest',
-      name: intl.formatMessage(messages.autorequest),
-      description: intl.formatMessage(messages.autorequestDescription),
-      permission: Permission.AUTO_REQUEST,
-      requires: [{ permissions: [Permission.REQUEST] }],
-      children: [
-        {
-          id: 'autorequestmovies',
-          name: intl.formatMessage(messages.autorequestMovies),
-          description: intl.formatMessage(
-            messages.autorequestMoviesDescription
-          ),
-          permission: Permission.AUTO_REQUEST_MOVIE,
-          requires: [
-            {
-              permissions: [Permission.REQUEST, Permission.REQUEST_MOVIE],
-              type: 'or',
-            },
-          ],
-        },
-        {
-          id: 'autorequesttv',
-          name: intl.formatMessage(messages.autorequestSeries),
-          description: intl.formatMessage(
-            messages.autorequestSeriesDescription
-          ),
-          permission: Permission.AUTO_REQUEST_TV,
           requires: [
             {
               permissions: [Permission.REQUEST, Permission.REQUEST_TV],
